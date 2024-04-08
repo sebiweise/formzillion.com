@@ -43,7 +43,10 @@
         "REDIS_PORT",
         "REDIS_PWD",
         "NEXT_PUBLIC_DOCS_URL",
-        "SLACK_ACTIVITY_URL"
+        "SLACK_ACTIVITY_URL",
+        "TRIGGER_ID",
+        "TRIGGER_API_KEY",
+        "TRIGGER_API_URL"
       ]
     },
     "lint": {

@@ -2,11 +2,8 @@
   "name": "formzillion",
   "version": "0.0.0",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "build": "dotenv -- turbo run build",
     "dev": "dotenv -- turbo run dev",
     "lint": "turbo run lint",
@@ -33,10 +30,10 @@
     "prettier": "latest",
     "@deploysentinel/playwright": "^0.3.3",
     "@playwright/test": "^1.34.3",
-    "turbo": "^1.9.3"
+    "turbo": "latest"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   },
-  "packageManager": "pnpm@7.17.0"
+  "packageManager": "pnpm@8.9.0"
 }
