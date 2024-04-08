@@ -4,11 +4,12 @@
   "pipeline": {
     "dev": {
       "dependsOn": ["^db:generate"],
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "build": {
-      "dependsOn": ["^build", "^db:generate"],
-      "outputs": ["dist/**", ".next/**"],
+      "dependsOn": ["^db:generate", "^build"],
+      "outputs": ["!.next/cache/**", ".next/**", "dist/**"],
       "env": [
         "STRIPE_SECRET_KEY",
         "STRIPE_WEBHOOK_SECRET",
@@ -44,14 +45,21 @@
         "SLACK_ACTIVITY_URL"
       ]
     },
+    "lint": {
+      "outputs": []
+    },
     "db:generate": {
       "cache": false
     },
-    "db:push": {
+    "db:studio": {
       "cache": false
     },
-    "lint": {
-      "outputs": []
-    }
+    "db:push": {
+      "dependsOn": ["db:generate"],
+      "cache": false
+    },
+    "db:migrate:deploy": {},
+    "db:migrate:dev": {},
+    "db:migrate:vercel": {}
   }
 }

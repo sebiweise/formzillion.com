@@ -5,7 +5,11 @@
   "types": "index.d.ts",
   "scripts": {
     "db:generate": "prisma generate",
-    "db:push": "prisma db push --skip-generate"
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:dev": "pnpm prisma migrate dev",
+    "db:migrate:vercel": "if test \"$NEXT_PUBLIC_VERCEL_ENV\" = \"preview\" ; then prisma db push --accept-data-loss ; else prisma migrate deploy ; fi",
+    "db:push": "prisma db push --accept-data-loss --skip-generate",
+    "db:studio": "prisma studio --browser none"
   },
   "dependencies": {
     "@prisma/client": "latest",

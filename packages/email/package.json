@@ -6,7 +6,6 @@
     ".react-email"
   ],
   "scripts": {
-    "prestart": "rm -rf .react-email/",
     "start": "email dev -p 3002",
     "export": "email export"
   },

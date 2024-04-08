@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "rm -rf .next/",
-    "dev": "next dev -p 3000",
+    "dev": "concurrently --kill-others \"next dev --turbo\" \"prisma studio --browser none\"",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint": "next lint",
+    "start": "next start"
   },
   "dependencies": {
     "@botpoison/node": "^0.1.10",
@@ -91,6 +91,7 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "autoprefixer": "^10.4.14",
+    "concurrently": "^8.0.1",
     "eslint-config-custom": "workspace:*",
     "postcss": "^8.4.21",
     "prettier": "2.8.4",
