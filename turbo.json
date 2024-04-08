@@ -39,8 +39,9 @@
         "FROM_EMAIL",
         "NEXT_PUBLIC_AIRTABLE_CLIENT_ID",
         "NEXT_PUBLIC_AIRTABLE_CLIENT_SECRET_ID",
-        "REDIS_URI",
+        "REDIS_HOST",
         "REDIS_PORT",
+        "REDIS_PWD",
         "NEXT_PUBLIC_DOCS_URL",
         "SLACK_ACTIVITY_URL"
       ]

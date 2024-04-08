@@ -3,9 +3,12 @@ import { Queue } from "bullmq";
 const queueName = "fz_actions";
 const bullConfig = {
   connection: {
-    host: process.env.REDIS_URI,
-    port: Number(process.env.REDIS_PORT),
+    host: process.env.REDIS_HOST || "127.0.0.1",
+    port: Number(process.env.REDIS_PORT || 6379),
     ...(!process.env.REDIS_URI?.includes("127.0") && { tls: {} }),
+    ...(process.env.REDIS_PWD && {
+      password: process.env.REDIS_PWD,
+    }),
   },
   prefix: `{${process.env.NODE_ENV === "production" ? "prod" : "dev"}}-{fz}`,
 };
