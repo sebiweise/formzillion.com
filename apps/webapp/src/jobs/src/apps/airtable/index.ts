@@ -3,8 +3,8 @@ import qs from "querystring";
 
 import { IEventData } from "../../types";
 import { httpClient } from "../../../utils";
+import prisma from "@/lib/prisma";
 
-const pg = global?.pg;
 const { AIRTABLE_CLIENT_ID, AIRTABLE_CLIENT_SECRET_ID } = process.env;
 
 const clientId = AIRTABLE_CLIENT_ID;
@@ -17,7 +17,7 @@ const authorizationHeader = `Basic ${encodedCredentials}`;
 interface IAirtableData extends IEventData {
   userId: string;
   actionSlug: string;
-  connId: string;
+  connId: number;
   apiKeys: {
     accessToken: string;
     refreshToken: string;
@@ -48,7 +48,7 @@ const addRecord = async ({
   table,
   baseUrl = "https://api.airtable.com/v0",
 }: any) => {
-  const fields = {};
+  const fields: any = {};
   each(formValues, (value, key) => (fields[startCase(key)] = value));
 
   const addRecordInTable = await httpClient({
@@ -71,6 +71,11 @@ const createFields = async ({
   formValues,
   table,
   baseUrl = "https://api.airtable.com/v0",
+}: {
+  accessToken: string;
+  formValues: any;
+  table: any;
+  baseUrl: string;
 }) => {
   const response = await Promise.all(
     Object.keys(formValues).map(async (key) => {
@@ -94,7 +99,7 @@ const createFields = async ({
   return response;
 };
 
-const refreshAccessToken = async ({ refreshToken, connId }) => {
+const refreshAccessToken = async ({ refreshToken, connId }: { refreshToken: string; connId: number; }) => {
   const response = await httpClient({
     method: "POST",
     endPoint: `https://www.airtable.com/oauth2/v1/token`,
@@ -120,16 +125,19 @@ const refreshAccessToken = async ({ refreshToken, connId }) => {
 
   // Updating the tokens back to the connections
   try {
-    await pg("connections")
-      .where({ id: connId })
-      .update({
+    await prisma.connections.update({
+      where: {
+        id: connId
+      },
+      data: {
         apiKeys: {
           accessToken: tokens?.access_token,
           refreshToken: tokens?.refresh_token,
           additionalData: tokens,
         },
-      });
-  } catch (e) {}
+      }
+    })
+  } catch (e) { }
 
   return {
     success: true,

@@ -21,23 +21,23 @@ const httpClient = async ({
   };
 
   try {
-    const response: IHttpClientResp = await axios(payload);
+    const { success, message, statusText, ...rest }: IHttpClientResp = await axios(payload);
 
     return {
       success: true,
-      message: response.statusText,
-      ...response,
+      message: statusText,
+      ...rest,
     };
-  } catch (err) {
+  } catch (error: any) {
     Logger.info(
-      `httpClient | endPoint - ${endPoint} | Error Message - ${err.message}`
+      `httpClient | endPoint - ${endPoint} | Error Message - ${error.message}`
     );
 
-    const errResponse: IHttpClientResp = err;
+    const { success, message, statusText, ...rest }: IHttpClientResp = error;
 
     return {
       success: false,
-      ...errResponse,
+      ...rest,
     };
   }
 };

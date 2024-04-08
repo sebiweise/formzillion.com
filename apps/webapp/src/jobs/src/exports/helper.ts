@@ -5,15 +5,15 @@ const { BUCKET_URL, BUCKET_KEY } = process.env;
 
 const bucketName = "exports";
 
-export const supabase = createClient(BUCKET_URL, BUCKET_KEY);
+export const supabase = createClient(BUCKET_URL!, BUCKET_KEY!);
 
 // Function to convert JSON to CSV
-export function convertJsonToCsv(jsonData) {
+export function convertJsonToCsv(jsonData: any) {
   const random = Math.floor(Math.random() * 900) + 100;
   const fileName = `uploads_${Date.now()}${random}.csv`;
   try {
     const csvFilePath = `${fileName}`;
-    const csvData = json2csv(jsonData.map((data) => data.fields));
+    const csvData = json2csv(jsonData.map((data: any) => data.fields));
     fs.writeFileSync(csvFilePath, csvData, "utf8");
     return { csvData, fileName };
   } catch (error) {
@@ -22,7 +22,7 @@ export function convertJsonToCsv(jsonData) {
 }
 
 // Function to upload file to Supabase storage and get file URL
-export async function uploadFileToSupabase(csvFile, fileName) {
+export async function uploadFileToSupabase(csvFile: any, fileName: string) {
   // Upload file to Supabase storage
   const { data, error }: any = await supabase.storage
     .from(bucketName)
@@ -40,7 +40,7 @@ export async function uploadFileToSupabase(csvFile, fileName) {
   return fileUrl;
 }
 
-export const getUrl = async (fileName) => {
+export const getUrl = async (fileName: string) => {
   const { data } = await supabase.storage.from(bucketName).getPublicUrl(fileName);
   return data.publicUrl;
 };

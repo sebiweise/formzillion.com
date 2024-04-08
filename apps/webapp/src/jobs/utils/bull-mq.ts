@@ -12,7 +12,7 @@ export const createQueues = () => {
     });
 
     return queuesMap;
-  } catch (error) {
+  } catch (error: any) {
     Logger.error(
       `Error in creating BullMq Producer for Queue - ${error.message}`
     );

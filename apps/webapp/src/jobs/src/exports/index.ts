@@ -2,10 +2,9 @@ import { httpClient } from "../../utils";
 import { ExportSubmissionsEmail } from "./exportEmail";
 import { convertJsonToCsv, uploadFileToSupabase } from "./helper";
 import { apiKey, fromEmailData } from "../config/sengrid";
+import prisma from "@/lib/prisma";
 
-const pg = global.pg;
-
-const sendEmail = async ({ data, apiKey }) => {
+const sendEmail = async ({ data, apiKey }: { data: any; apiKey: string }) => {
   return await httpClient({
     endPoint: `https://api.sendgrid.com/v3/mail/send`,
     method: "POST",
@@ -17,15 +16,19 @@ const sendEmail = async ({ data, apiKey }) => {
   });
 };
 
-const exportSubmissions = async (eventData) => {
+const exportSubmissions = async (eventData: any) => {
   const exportDays = new Date();
   const { userEmail } = eventData;
   exportDays.setDate(exportDays.getDate() - eventData.exportDays);
 
-  const jsonData = await pg("form_submissions")
-    .where("form_id", eventData.formId)
-    .where("created_at", ">=", exportDays)
-    .select("*");
+  const jsonData = await prisma.form_submissions.findFirst({
+    where: {
+      formId: eventData.formId,
+      createdAt: {
+        gt: exportDays
+      }
+    }
+  });
 
   const { csvData, fileName }: any = convertJsonToCsv(jsonData);
   const fileUrl = await uploadFileToSupabase(csvData, fileName);
