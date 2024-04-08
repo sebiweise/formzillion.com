@@ -77,7 +77,10 @@
     "tailwind-merge": "^1.12.0",
     "tailwind-scrollbar": "^3.0.0",
     "typescript": "^4.9.5",
-    "typewriter-effect": "^2.19.0"
+    "typewriter-effect": "^2.19.0",
+    "@trigger.dev/sdk": "^2.3.18",
+    "@trigger.dev/nextjs": "^2.3.18",
+    "@trigger.dev/react": "^2.3.18"
   },
   "devDependencies": {
     "@prisma/nextjs-monorepo-workaround-plugin": "^4.14.1",
