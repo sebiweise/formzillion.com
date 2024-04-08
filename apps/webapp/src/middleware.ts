@@ -30,7 +30,9 @@ export async function middleware(req: any) {
     !session &&
     !preloginUrls.includes(req.nextUrl.pathname) &&
     !req.nextUrl.pathname.startsWith("/f/") &&
-    !req.nextUrl.pathname.startsWith("/thank-you")
+    !req.nextUrl.pathname.startsWith("/thank-you") &&
+    !req.nextUrl.pathname.startsWith("/api/trigger") &&
+    !req.nextUrl.pathname.startsWith("/health")
   ) {
     const redirectUrl = req.nextUrl.clone();
     redirectUrl.pathname = "/login";
