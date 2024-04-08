@@ -46,7 +46,11 @@
         "SLACK_ACTIVITY_URL",
         "TRIGGER_ID",
         "TRIGGER_API_KEY",
-        "TRIGGER_API_URL"
+        "TRIGGER_API_URL",
+        "BUCKET_URL",
+        "BUCKET_KEY",
+        "AIRTABLE_CLIENT_ID",
+        "AIRTABLE_CLIENT_SECRET_ID"
       ]
     },
     "lint": {

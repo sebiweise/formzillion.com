@@ -37,6 +37,7 @@ const httpClient = async ({
 
     return {
       success: false,
+      message,
       ...rest,
     };
   }
